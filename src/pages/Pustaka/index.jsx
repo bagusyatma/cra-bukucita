@@ -12,6 +12,7 @@ const Pustaka = () => {
   const [loadingBook, setLoadingBook] = useState(false);
 
   const [categories, setCategories] = useState();
+  const [loadingCategory, setLoadingCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState();
 
   const [params, setParams] = useState({ page: 0, size: 24 });
@@ -24,14 +25,17 @@ const Pustaka = () => {
   const dataRef = useRef();
 
   const fetchCategory = async () => {
+    setLoadingCategory(true);
     try {
       const response = await getCategories();
       if (response.status === 200) {
         setCategories(response.data);
+        setLoadingCategory(false);
         setSelectedCategory(response.data[0].id);
       }
     } catch (error) {
       console.log(error);
+      setLoadingCategory(false);
     }
   };
 
@@ -85,7 +89,7 @@ const Pustaka = () => {
     if (!loadMore && Math.round(target.scrollTop + target.offsetHeight) === target.scrollHeight && !isLast) {
       setLoadMore(true);
       target.scrollTo(0, target.scrollHeight);
-      setParams({ ...params, page: params.page + 1 }) 
+      setParams({ ...params, page: params.page + 1 });
     }
   };
 
@@ -140,7 +144,7 @@ const Pustaka = () => {
 
       <div className="w-full h-[90%] pb-8">
         {!loadingBook ? (
-          books.length !== 0 ? (
+          books.length !== 0 && (
             <div className="h-full overflow-y-auto" onScroll={(event) => handleScroll(event)} ref={dataRef}>
               <div className="grid grid-cols-12 gap-x-1">
                 {books.map((item) => (
@@ -158,12 +162,12 @@ const Pustaka = () => {
                 {!isSearch && !isLast && <div className="col-span-12 px-3">Sedang memuat...</div>}
               </div>
             </div>
-          ) : (
-            <div className="col-span-12 px-3">Anda belum memilih kategori</div>
           )
         ) : (
           <div className="col-span-12 px-3">Sedang memuat... </div>
         )}
+
+        {loadingCategory && <div className="col-span-12 px-3">Sedang memuat... </div>}
       </div>
     </div>
   );
