@@ -85,7 +85,7 @@ const Pustaka = () => {
     if (!loadMore && Math.round(target.scrollTop + target.offsetHeight) === target.scrollHeight && !isLast) {
       setLoadMore(true);
       target.scrollTo(0, target.scrollHeight);
-      setTimeout(() => setParams({ ...params, page: params.page + 1 }), 200);
+      setParams({ ...params, page: params.page + 1 }) 
     }
   };
 
