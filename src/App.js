@@ -1,22 +1,18 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header";
-import Naviation from "./components/Naviation";
+import Navigation from "./components/Navigation";
 import Bukucita from "./pages";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="bg-gray-50">
-        <div className="w-full h-screen container mx-auto flex flex-col">
-          <Header />
+      <div className="h-screen">
+        <Header />
 
-          <div className="w-full h-[88%] lg:pt-0">
-            <div className="flex flex-col-reverse lg:flex-row h-full">
-              <Naviation />
-              <Bukucita />
-            </div>
-          </div>
+        <div className="w-full h-full pt-16 pb-16 lg:pb-8 lg:container lg:mx-auto lg:flex">
+          <Navigation />
+          <Bukucita />
         </div>
       </div>
     </BrowserRouter>
